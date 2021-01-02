@@ -1,0 +1,1273 @@
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top: 0!important;">
+  <div id='mainContent' class="row gap-20 masonry pos-r">
+    <div class="col-12">
+      <!-- <div class="masonry-sizer col-md-6" style="margin-top: 0px !important;"></div> -->
+      <div class="masonry-item  w-100 col-12">
+        <div class="row gap-20">
+          <!-- #Toatl Visits ==================== -->
+          <div class='col-md-3'>
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Nombre total de tâches</h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash"></span>
+                  </div>
+                  <div class="peer">
+                    <span
+                      class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">{{this.alltasks.length}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- #Total Page Views ==================== -->
+          <div class='col-md-3'>
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Taches programmées</h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash2"></span>
+                  </div>
+                  <div class="peer">
+                    <span
+                      class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">{{this.scheduledtasks.length}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- #Unique Visitors ==================== -->
+          <div class='col-md-3'>
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Tâches spontanées</h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash3"></span>
+                  </div>
+                  <div class="peer">
+                    <span
+                      class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">{{this.spontaneoustasks.length}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- #Bounce Rate ==================== -->
+          <div class='col-md-3'>
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Performance</h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash4"></span>
+                  </div>
+                  <div class="peer">
+                    <span
+                      class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">{{this.performance | number: '1.1-1'}}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-item col-12" *ngIf="this.assignedtasks.length > 0">
+        <!-- What You Give others to do ==================== -->
+        <div class="bd bgc-white">
+          <div class="peers fxw-nw@lg+ ai-s">
+            <div class="peer bdL p-20 w-50p@lg+ w-100p@lg-">
+
+              <div class="">
+                <div class="card-hover-shadow-2x mb-3 card">
+                  <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                        class="fa fa-tasks"></i>&nbsp;Tâches programmées assignées à d'autres</div>
+                  </div>
+                  <div class="scroll-area-sm">
+                    <div style="position: static;" class="ps ps--active-y">
+                      <div class="ps-content">
+                        <ul class=" list-group list-group-flush" id="wrapping_headbar">
+
+                          <li class="list-group-item " *ngFor="let task of this.assignedscheduledtasks; let i = index">
+                            <div class="todo-indicator badge-danger" [ngClass]="{
+                                            'bg-warning': this.task.status === 'ongoing',
+                                            'bg-danger': this.task.status === 'undone',
+                                            'bg-success': this.task.status === 'done',
+                                            'bg-primary': this.task.status === 'suspended',
+                                            'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                          }"></div>
+                            <div class="widget-content p-0">
+                              <div class="widget-content-wrapper">
+                                <div class="widget-content-left mr-2">
+                                  <div class="custom-checkbox custom-control">
+                                    <input class="custom-control-input" type="checkbox" [id]="'assignedcheckingbox' + i"
+                                      (change)="this.toggleTaskStatus(task)" [checked]="this.task.progress===100">
+                                    <label class="custom-control-label" [for]="'assignedcheckingbox' + i">&nbsp;
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="widget-content-left" (click)="this.repeatScheme = task" data-toggle="modal"
+                                  data-target="#updateModal">
+                                  <div class="widget-heading">
+                                    {{this.task.label}}
+                                    <div class="badge badge-danger ml-2" [ngClass]="{
+                                            'bg-warning': this.task.status === 'ongoing',
+                                            'bg-danger': this.task.status === 'undone',
+                                            'bg-success': this.task.status === 'done',
+                                            'bg-primary': this.task.status === 'suspended',
+                                            'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                          }">{{this.task.status}}</div>
+                                    <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                                            'bg-success': this.task.progress === 100,
+                                            'bg-danger': this.task.progress === 0
+                                          }">
+                                      {{this.task.progress | number: '1.1-1'}} {{' %'}}
+                                    </span>
+                                    <span class="ml-2 text-success special_spacing bg-primary" [ngClass]="{
+                                        'bg-warning': this.task.period === 'MONTH',
+                                        'bg-info': this.task.period === 'DAY' 
+                                          || (this.task.period === 'WEEK' && this.task.weekdays.length === 6),
+                                        'bg-success': this.task.period === 'YEAR',
+                                        'bg-primary': this.task.period === 'WEEK' && this.task.weekdays.length !== 6
+                                      }">{{(this.task.period === 'WEEK' 
+                                            && this.task.weekdays.length === 6)? 'DAY'
+                                            : task.period}}
+                                    </span>
+                                  </div>
+                                  <div class="widget-subheading">
+                                    <span *ngIf="this.task.subtasksNumber > 0; else nosubtasks">
+                                      <i>Nombre de sous-tâches:
+                                        <span class="text-danger">
+                                          {{this.task.subtasksNumber}}
+                                        </span>
+                                      </i>
+                                    </span>
+                                    <ng-template #nosubtasks>
+                                      <span class="text-danger">
+                                        Aucune sous-tâche
+                                      </span>
+                                    </ng-template>
+                                    <span class="ml-2">
+                                      <i>deadline:
+                                        <span class="text-danger">
+                                          {{this.task.deadline | date: 'EEEE dd MMMM, yyyy'}}
+                                        </span>
+                                      </i>
+                                    </span>
+                                    <span class="ml-2">
+                                      <i>Période
+                                        <span class="text-danger">
+                                          <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            {{this.task.cronjob}}
+                                          </span>
+                                        </span>
+                                      </i>
+                                    </span>
+                                    <span class="ml-2">
+                                      <i>Assigné à
+                                        <span class="text-primary"
+                                          style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                          {{this.task.assignedToName}}
+                                        </span>
+                                      </i>
+                                    </span>
+                                    <span class="ml-2"
+                                      *ngIf="task.assignerId.length > 0 && task.assignerId !== this.currentuser.uid">
+                                      <i>Assigné par
+                                        <span class="text-primary">
+                                          <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            {{this.task.assignerName}}
+                                          </span>
+                                        </span>
+                                      </i>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="widget-content-right">
+                                  <button class="border-0 btn-transition btn btn-outline-success" data-toggle="collapse"
+                                    attr.data-target="#collapseFour{{i}}" aria-expanded="true"
+                                    attr.aria-controls="collapseFour{{i}}"
+                                    (click)="this.saveInCookies('collapseFour' + i)"
+                                    [disabled]="this.task.subtasksNumber === 0">
+                                    <span class="fa fa-chevron-down"></span>
+                                  </button>
+                                  <button class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal"
+                                    [attr.data-target]="'#cancelModal400' + i" [disabled]="task.status==='cancelled'">
+                                    <i class="fa fa-trash"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div [id]="'collapseFour' + i" class="collapse" data-parent="#wrapping_headbar">
+
+                              <div class="task d-flex flex-column pt-2 align-items-center"
+                                *ngIf="this.task.subtasks.length > 0">
+
+                                <label class="checkbox border-info px-4 col-9"
+                                  *ngFor="let subtask of this.task.subtasks; let j = index;">
+                                  <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input class="custom-control-input" type="checkbox" [checked]="subtask.completed"
+                                      [id]="'subtsk_' + i + '_' + j" [ngClass]="{
+                                        'border-danger':subtask.completed===true
+                                      }" (change)="this.toggleSubtaskStatus(task, j)">
+                                    <label class="custom-control-label" [ngClass]="{
+                                      'strike text-danger':subtask.completed===true
+                                    }" [for]="'subtsk_' + i + '_' + j">{{subtask.task}}
+                                    </label>
+                                    <a (click)="this.deleteSubtask(task, j)" class="pull-right"><span
+                                        class="fa fa-trash text-danger"></span></a>
+                                  </div>
+
+                                </label>
+                              </div>
+                            </div>
+
+                            <div class="modal" tabindex="-1" role="dialog" [id]="'cancelModal400' + i">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Voulez-vous annuler ou suspendre la tâche?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Une tâche <b><i>suspendue</i></b> peut être <b><i>réactivée</i></b> à l'avenir
+                                      contrairement à une tâche <b><i>annulée</i></b></p>
+                                    <hr>
+                                    <p> L'annulation est <b><i>irreversible</i></b></p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark"
+                                      (click)="this.changeTaskStatus(task, 'cancelled')" data-dismiss="modal">Annuler la
+                                      tâche</button>
+                                    <button type="button" class="btn btn-primary"
+                                      (click)="this.changeTaskStatus(task, 'suspended')" data-dismiss="modal">Suspendre
+                                      la tâche</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="d-block text-right card-footer">
+                    <button class="btn btn-primary" (click)="this.resetScheme(); this.repeatScheme.repeat = true"
+                      data-toggle="modal" data-target="#addModal">Ajouter une tâche
+                      programmée</button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="peer bdL p-20 w-50p@lg+ w-100p@lg-">
+              <div class="card-hover-shadow-2x mb-3 card">
+                <div class="card-header-tab card-header">
+                  <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                      class="fa fa-tasks"></i>&nbsp;Tâches spontanées assignées à d'autres</div>
+                </div>
+                <div class="scroll-area-sm">
+                  <div style="position: static;" class="ps ps--active-y">
+                    <div class="ps-content">
+                      <ul class=" list-group list-group-flush" id="wrapping_header">
+
+                        <li class="list-group-item " *ngFor="let task of this.assignedspontaneoustasks; let i = index">
+                          <div class="todo-indicator badge-danger" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                        }"></div>
+                          <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                              <div class="widget-content-left mr-2">
+                                <div class="custom-checkbox custom-control">
+                                  <input class="custom-control-input" type="checkbox" [id]="'assignedcheckbox' + i"
+                                    (change)="this.toggleTaskStatus(task)" [checked]="this.task.progress===100">
+                                  <label class="custom-control-label" [for]="'assignedcheckbox' + i">&nbsp;</label>
+                                </div>
+                              </div>
+                              <div class="widget-content-left" (click)="this.repeatScheme = task" data-toggle="modal"
+                                data-target="#updateModal">
+                                <div class="widget-heading">
+                                  {{this.task.label}}
+                                  <div class="badge badge-danger ml-2" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                        }">{{this.task.status}}</div>
+                                  <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                                          'bg-success': this.task.progress === 100,
+                                          'bg-danger': this.task.progress === 0
+                                        }">
+                                    {{this.task.progress | number: '1.1-1'}} {{' %'}}
+                                  </span>
+                                  <span class="ml-2 text-success special_spacing bg-primary" [ngClass]="{
+                                                'bg-warning': this.task.period === 'MONTH',
+                                                'bg-info': this.task.period === 'DAY' 
+                                                  || (this.task.period === 'WEEK' && this.task.weekdays.length === 6),
+                                                'bg-success': this.task.period === 'YEAR',
+                                                'bg-primary': this.task.period === 'WEEK' && this.task.weekdays.length !== 6
+                                              }">{{(this.task.period === 'WEEK' 
+                                                    && this.task.weekdays.length === 6)? 'DAY'
+                                                    : task.period}}
+                                  </span>
+                                </div>
+                                <div class="widget-subheading">
+                                  <span *ngIf="this.task.subtasksNumber > 0; else nosubtasks">
+                                    <i>Nombre de sous-tâches:
+                                      <span class="text-danger">
+                                        {{this.task.subtasksNumber}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <ng-template #nosubtasks>
+                                    <span class="text-danger">
+                                      Aucune sous-tâche
+                                    </span>
+                                  </ng-template>
+                                  <span class="ml-2">
+                                    <i>deadline:
+                                      <span class="text-danger">
+                                        {{this.task.deadline | date: 'EEEE dd MMMM, yyyy'}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <span class="ml-2">
+                                    <i>Assigné à
+                                      <span class="text-primary"
+                                        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        {{this.task.assignedToName}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="widget-content-right">
+                                <button class="border-0 btn-transition btn btn-outline-success" data-toggle="collapse"
+                                  attr.data-target="#collapseThree{{i}}" aria-expanded="true"
+                                  attr.aria-controls="collapseThree{{i}}"
+                                  (click)="this.saveInCookies('collapseThree' + i)"
+                                  [disabled]="this.task.subtasksNumber === 0">
+                                  <span class="fa fa-chevron-down"></span>
+                                </button>
+                                <button class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal"
+                                  [attr.data-target]="'#cancelModal200' + i" [disabled]="task.status==='cancelled'"> <i
+                                    class="fa fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div [id]="'collapseThree' + i" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#wrapping_header_header">
+
+                            <div class="task d-flex flex-column pt-2 align-items-center"
+                              *ngIf="this.task.subtasks.length > 0">
+
+                              <label class="checkbox border-info px-4 col-9"
+                                *ngFor="let subtask of this.task.subtasks; let j = index;">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                  <input class="custom-control-input" type="checkbox" [checked]="subtask.completed"
+                                    [id]="'assigned_subcheckbx_' + i + '_' + j" [ngClass]="{
+                                        'border-danger':subtask.completed===true
+                                      }" (change)="this.toggleSubtaskStatus(task, j)" />
+                                  <label class="custom-control-label" [ngClass]="{
+                                      'strike text-danger':subtask.completed===true
+                                    }" [for]="'assigned_subcheckbx_' + i + '_' + j">{{subtask.task}}
+                                  </label>
+                                  <a (click)="this.deleteSubtask(task, j)" class="pull-right"><span
+                                      class="fa fa-trash text-danger"></span></a>
+                                </div>
+
+                              </label>
+                            </div>
+                          </div>
+                          <div class="modal" tabindex="-1" role="dialog" [id]="'cancelModal300' + i">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Voulez-vous annuler ou suspendre la tâche?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Une tâche <b><i>suspendue</i></b> peut être <b><i>réactivée</i></b> à l'avenir
+                                    contrairement à une tâche <b><i>annulée</i></b></p>
+                                  <hr>
+                                  <p> L'annulation est <b><i>irreversible</i></b></p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-dark"
+                                    (click)="this.changeTaskStatus(task, 'cancelled')" data-dismiss="modal">Annuler la
+                                    tâche</button>
+                                  <button type="button" class="btn btn-primary"
+                                    (click)="this.changeTaskStatus(task, 'suspended')" data-dismiss="modal">Suspendre la
+                                    tâche</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="d-block text-right card-footer">
+                  <button class="btn btn-primary" (click)="this.resetScheme(); this.repeatScheme.repeat = false"
+                    data-toggle="modal" data-target="#addModal">Ajouter une tâche spontanée</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="masonry-item col-12" *ngIf="this.assignedsoonovertasks.length > 0">
+        <!-- #Site Visits ==================== -->
+        <div class="bd bgc-white">
+          <div class="peers fxw-nw@lg+ ai-s">
+            <div class="peer bdL p-20 w-100p@lg+ w-100p@lg-">
+              <div class="card-hover-shadow-2x mb-3 card">
+                <div class="card-header-tab card-header">
+                  <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                      class="fa fa-tasks"></i>&nbsp;Tâches Assignées Expirant Aujourd'hui</div>
+                </div>
+                <div class="scroll-area-sm">
+                  <div style="position: static;" class="ps ps--active-y">
+                    <div class="ps-content">
+                      <ul class=" list-group list-group-flush" id="wrapping_header">
+
+                        <li class="list-group-item " *ngFor="let task of this.assignedsoonovertasks; let i = index">
+                          <div class="todo-indicator badge-danger" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled'
+                                        }"></div>
+                          <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                              <div class="widget-content-left mr-2">
+                                <div class="custom-checkbox custom-control">
+                                  <input class="custom-control-input" type="checkbox" [id]="'asscheckbox' + i"
+                                    (change)="this.toggleTaskStatus(task)" [checked]="this.task.progress===100">
+                                  <label class="custom-control-label" [for]="'asscheckbox' + i">&nbsp;</label>
+                                </div>
+                              </div>
+                              <div class="widget-content-left" (click)="this.repeatScheme = task" data-toggle="modal"
+                                data-target="#updateModal">
+                                <div class="widget-heading">
+                                  {{this.task.label}}
+                                  <div class="badge badge-danger ml-2" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled'
+                                        }">{{this.task.status}}</div>
+                                  <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                                          'bg-success': this.task.progress === 100,
+                                          'bg-danger': this.task.progress === 0
+                                        }">
+                                    {{this.task.progress | number: '1.1-1'}} {{' %'}}
+                                  </span>
+                                  <span class="ml-2 text-success special_spacing bg-primary" [ngClass]="{
+                                                'bg-warning': this.task.period === 'MONTH',
+                                                'bg-info': this.task.period === 'DAY' 
+                                                  || (this.task.period === 'WEEK' && this.task.weekdays.length === 6),
+                                                'bg-success': this.task.period === 'YEAR',
+                                                'bg-primary': this.task.period === 'WEEK' && this.task.weekdays.length !== 6
+                                              }">{{(this.task.period === 'WEEK' 
+                                                    && this.task.weekdays.length === 6)? 'DAY'
+                                                    : task.period}}
+                                  </span>
+                                </div>
+                                <div class="widget-subheading">
+                                  <span *ngIf="this.task.subtasksNumber > 0; else nosubtasks">
+                                    <i>Nombre de sous-tâches:
+                                      <span class="text-danger">
+                                        {{this.task.subtasksNumber}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <ng-template #nosubtasks>
+                                    <span class="text-danger">
+                                      Aucune sous-tâche
+                                    </span>
+                                  </ng-template>
+                                  <span class="ml-2">
+                                    <i>deadline:
+                                      <span class="text-danger">
+                                        {{this.task.deadline | date: 'EEEE dd MMMM, yyyy'}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <span class="ml-2">
+                                    <i>Période
+                                      <span class="text-danger">
+                                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                          {{this.task.cronjob}}
+                                        </span>
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <span class="ml-2">
+                                    <i>Assigné à
+                                      <span class="text-primary">
+                                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                          {{this.task.assignedToName}}
+                                        </span>
+                                      </span>
+                                    </i>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="widget-content-right">
+                                <button class="border-0 btn-transition btn btn-outline-success" data-toggle="collapse"
+                                  attr.data-target="#collapseTwo{{i}}" aria-expanded="true"
+                                  attr.aria-controls="collapseTwo{{i}}" (click)="this.saveInCookies('collapseTwo' + i)"
+                                  [disabled]="this.task.subtasksNumber === 0">
+                                  <span class="fa fa-chevron-down"></span>
+                                </button>
+                                <button class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal"
+                                  [attr.data-target]="'#cancelModal300' + i" [disabled]="task.status==='cancelled'"> <i
+                                    class="fa fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div [id]="'collapseTwo' + i" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#wrapping_header">
+
+                            <div class="task d-flex flex-column pt-2 align-items-center"
+                              *ngIf="this.task.subtasks.length > 0">
+
+                              <label class="checkbox border-info px-4 col-9"
+                                *ngFor="let subtask of this.task.subtasks; let j = index;">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                  <input class="custom-control-input" type="checkbox" [checked]="subtask.completed"
+                                    [id]="'subcheckbx_' + i + '_' + j" [ngClass]="{
+                                        'border-danger':subtask.completed===true
+                                      }" (change)="this.toggleSubtaskStatus(task, j)" />
+                                  <label class="custom-control-label" [ngClass]="{
+                                      'strike text-danger':subtask.completed===true
+                                    }" [for]="'subcheckbx_' + i + '_' + j">{{subtask.task}}
+                                  </label>
+                                  <a (click)="this.deleteSubtask(task, j)" class="pull-right"><span
+                                      class="fa fa-trash text-danger"></span></a>
+                                </div>
+
+                              </label>
+                            </div>
+                          </div>
+                          <div class="modal" tabindex="-1" role="dialog" [id]="'cancelModal200' + i">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Voulez-vous annuler ou suspendre la tâche?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Une tâche <b><i>suspendue</i></b> peut être <b><i>réactivée</i></b> à l'avenir
+                                    contrairement à une tâche <b><i>annulée</i></b></p>
+                                  <hr>
+                                  <p> L'annulation est <b><i>irreversible</i></b></p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-dark"
+                                    (click)="this.changeTaskStatus(task, 'cancelled')" data-dismiss="modal">Annuler la
+                                    tâche</button>
+                                  <button type="button" class="btn btn-primary"
+                                    (click)="this.changeTaskStatus(task, 'suspended')" data-dismiss="modal">Suspendre la
+                                    tâche</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="masonry-item col-12">
+        <!-- #Site Visits ==================== -->
+        <div class="bd bgc-white">
+          <div class="peers fxw-nw@lg+ ai-s">
+            <div class="peer bdL p-20 w-50p@lg+ w-100p@lg-">
+
+              <div class="">
+                <div class="card-hover-shadow-2x mb-3 card">
+                  <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                        class="fa fa-tasks"></i>&nbsp;Tâches Programmées Personnelles</div>
+                  </div>
+                  <div class="scroll-area-sm">
+                    <div style="position: static;" class="ps ps--active-y">
+                      <div class="ps-content">
+                        <ul class=" list-group list-group-flush" id="wrapping_head">
+
+                          <li class="list-group-item " *ngFor="let task of this.scheduledtasks; let i = index">
+                            <div class="todo-indicator badge-danger" [ngClass]="{
+                                            'bg-warning': this.task.status === 'ongoing',
+                                            'bg-danger': this.task.status === 'undone',
+                                            'bg-success': this.task.status === 'done',
+                                            'bg-primary': this.task.status === 'suspended',
+                                            'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                          }"></div>
+                            <div class="widget-content p-0">
+                              <div class="widget-content-wrapper">
+                                <div class="widget-content-left mr-2">
+                                  <div class="custom-checkbox custom-control">
+                                    <input class="custom-control-input" type="checkbox" [id]="'checkingbox' + i"
+                                      (change)="this.toggleTaskStatus(task)" [checked]="this.task.progress===100">
+                                    <label class="custom-control-label" [for]="'checkingbox' + i">&nbsp;
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="widget-content-left" (click)="this.repeatScheme = task" data-toggle="modal"
+                                  data-target="#updateModal">
+                                  <div class="widget-heading">
+                                    {{this.task.label}}
+                                    <div class="badge badge-danger ml-2" [ngClass]="{
+                                            'bg-warning': this.task.status === 'ongoing',
+                                            'bg-danger': this.task.status === 'undone',
+                                            'bg-success': this.task.status === 'done',
+                                            'bg-primary': this.task.status === 'suspended',
+                                            'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                          }">{{this.task.status}}</div>
+                                    <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                                            'bg-success': this.task.progress === 100,
+                                            'bg-danger': this.task.progress === 0
+                                          }">
+                                      {{this.task.progress | number: '1.1-1'}} {{' %'}}
+                                    </span>
+                                    <span class="ml-2 text-success special_spacing bg-primary" [ngClass]="{
+                                        'bg-warning': this.task.period === 'MONTH',
+                                        'bg-info': this.task.period === 'DAY' 
+                                          || (this.task.period === 'WEEK' && this.task.weekdays.length === 6),
+                                        'bg-success': this.task.period === 'YEAR',
+                                        'bg-primary': this.task.period === 'WEEK' && this.task.weekdays.length !== 6
+                                      }">{{(this.task.period === 'WEEK' 
+                                            && this.task.weekdays.length === 6)? 'DAY'
+                                            : task.period}}
+                                    </span>
+                                  </div>
+                                  <div class="widget-subheading">
+                                    <span *ngIf="this.task.subtasksNumber > 0; else nosubtasks">
+                                      <i>Nombre de sous-tâches:
+                                        <span class="text-danger">
+                                          {{this.task.subtasksNumber}}
+                                        </span>
+                                      </i>
+                                    </span>
+                                    <ng-template #nosubtasks>
+                                      <span class="text-danger">
+                                        Aucune sous-tâche
+                                      </span>
+                                    </ng-template>
+                                    <span class="ml-2">
+                                      <i>deadline:
+                                        <span class="text-danger">
+                                          {{this.task.deadline | date: 'EEEE dd MMMM, yyyy'}}
+                                        </span>
+                                      </i>
+                                    </span>
+                                    <span class="ml-2">
+                                      <i>Période
+                                        <span class="text-danger">
+                                          <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            {{this.task.cronjob}}
+                                          </span>
+                                        </span>
+                                      </i>
+                                    </span>
+                                    <span class="ml-2"
+                                      *ngIf="task.assignerId.length > 0 && task.assignerId !== this.currentuser.uid">
+                                      <i>Assigné par
+                                        <span class="text-primary">
+                                          <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            {{this.task.assignerName}}
+                                          </span>
+                                        </span>
+                                      </i>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="widget-content-right">
+                                  <button class="border-0 btn-transition btn btn-outline-success" data-toggle="collapse"
+                                    attr.data-target="#collapseOne{{i}}" aria-expanded="true"
+                                    attr.aria-controls="collapseOne{{i}}"
+                                    (click)="this.saveInCookies('collapseOne' + i)"
+                                    [disabled]="this.task.subtasksNumber === 0">
+                                    <span class="fa fa-chevron-down"></span>
+                                  </button>
+                                  <button class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal"
+                                    [attr.data-target]="'#cancelModal100' + i" [disabled]="task.status==='cancelled'">
+                                    <i class="fa fa-trash"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div [id]="'collapseOne' + i" class="collapse" data-parent="#wrapping_head">
+
+                              <div class="task d-flex flex-column pt-2 align-items-center"
+                                *ngIf="this.task.subtasks.length > 0">
+
+                                <label class="checkbox border-info px-4 col-9"
+                                  *ngFor="let subtask of this.task.subtasks; let j = index;">
+                                  <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input class="custom-control-input" type="checkbox" [checked]="subtask.completed"
+                                      [id]="'subtsk_' + i + '_' + j" [ngClass]="{
+                                        'border-danger':subtask.completed===true
+                                      }" (change)="this.toggleSubtaskStatus(task, j)">
+                                    <label class="custom-control-label" [ngClass]="{
+                                      'strike text-danger':subtask.completed===true
+                                    }" [for]="'subtsk_' + i + '_' + j">{{subtask.task}}
+                                    </label>
+                                    <a (click)="this.deleteSubtask(task, j)" class="pull-right"><span
+                                        class="fa fa-trash text-danger"></span></a>
+                                  </div>
+
+                                </label>
+                              </div>
+                            </div>
+
+                            <div class="modal" tabindex="-1" role="dialog" [id]="'cancelModal100' + i">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Voulez-vous annuler ou suspendre la tâche?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Une tâche <b><i>suspendue</i></b> peut être <b><i>réactivée</i></b> à l'avenir
+                                      contrairement à une tâche <b><i>annulée</i></b></p>
+                                    <hr>
+                                    <p> L'annulation est <b><i>irreversible</i></b></p>
+                                    <hr>
+                                    <div class="form-group row">
+                                      <label for="suspendeduntil" class="col-4 col-form-label">Suspendu jusqu'à</label>
+                                      <div class="col-8 offset-2">
+                                        <input class="form-control" type="date" id="suspendeduntil"
+                                          [ngModel]="this.suspendeduntil | date: 'yyyy-MM-dd'" 
+                                          (ngModelChange)="this.suspendeduntil = setToDate($event);">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark"
+                                      (click)="this.changeTaskStatus(task, 'cancelled')" data-dismiss="modal">Annuler la
+                                      tâche</button>
+                                    <button type="button" class="btn btn-primary"
+                                      (click)="this.changeTaskStatus(task, 'suspended')" data-dismiss="modal">Suspendre
+                                      la tâche</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-block text-right card-footer">
+                    <button class="btn btn-primary" (click)="this.resetScheme(); this.repeatScheme.repeat = true"
+                      data-toggle="modal" data-target="#addModal">Ajouter une tâche
+                      programmée</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="peer bdL p-20 w-50p@lg+ w-100p@lg-">
+              <div class="card-hover-shadow-2x mb-3 card">
+                <div class="card-header-tab card-header">
+                  <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                      class="fa fa-tasks"></i>&nbsp;Tâches Spontanées Personelles</div>
+                </div>
+                <div class="scroll-area-sm">
+                  <div style="position: static;" class="ps ps--active-y">
+                    <div class="ps-content">
+                      <ul class=" list-group list-group-flush" id="wrapping_header">
+
+                        <li class="list-group-item " *ngFor="let task of this.spontaneoustasks; let i = index">
+                          <div class="todo-indicator badge-danger" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                        }"></div>
+                          <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                              <div class="widget-content-left mr-2">
+                                <div class="custom-checkbox custom-control">
+                                  <input class="custom-control-input" type="checkbox" [id]="'checkbox' + i"
+                                    (change)="this.toggleTaskStatus(task)" [checked]="this.task.progress===100">
+                                  <label class="custom-control-label" [for]="'checkbox' + i">&nbsp;</label>
+                                </div>
+                              </div>
+                              <div class="widget-content-left" (click)="this.repeatScheme = task" data-toggle="modal"
+                                data-target="#updateModal">
+                                <div class="widget-heading">
+                                  {{this.task.label}}
+                                  <div class="badge badge-danger ml-2" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                        }">{{this.task.status}}</div>
+                                  <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                                          'bg-success': this.task.progress === 100,
+                                          'bg-danger': this.task.progress === 0
+                                        }">
+                                    {{this.task.progress | number: '1.1-1'}} {{' %'}}
+                                  </span>
+                                  <span class="ml-2 text-success special_spacing bg-primary" [ngClass]="{
+                                                'bg-warning': this.task.period === 'MONTH',
+                                                'bg-info': this.task.period === 'DAY' 
+                                                  || (this.task.period === 'WEEK' && this.task.weekdays.length === 6),
+                                                'bg-success': this.task.period === 'YEAR',
+                                                'bg-primary': this.task.period === 'WEEK' && this.task.weekdays.length !== 6
+                                              }">{{(this.task.period === 'WEEK' 
+                                                    && this.task.weekdays.length === 6)? 'DAY'
+                                                    : task.period}}
+                                  </span>
+                                </div>
+                                <div class="widget-subheading">
+                                  <span *ngIf="this.task.subtasksNumber > 0; else nosubtasks">
+                                    <i>Nombre de sous-tâches:
+                                      <span class="text-danger">
+                                        {{this.task.subtasksNumber}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <ng-template #nosubtasks>
+                                    <span class="text-danger">
+                                      Aucune sous-tâche
+                                    </span>
+                                  </ng-template>
+                                  <span class="ml-2">
+                                    <i>deadline:
+                                      <span class="text-danger">
+                                        {{this.task.deadline | date: 'EEEE dd MMMM, yyyy'}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="widget-content-right">
+                                <button class="border-0 btn-transition btn btn-outline-success" data-toggle="collapse"
+                                  attr.data-target="#collapseTwo{{i}}" aria-expanded="true"
+                                  attr.aria-controls="collapseTwo{{i}}" (click)="this.saveInCookies('collapseTwo' + i)"
+                                  [disabled]="this.task.subtasksNumber === 0">
+                                  <span class="fa fa-chevron-down"></span>
+                                </button>
+                                <button class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal"
+                                  [attr.data-target]="'#cancelModal300' + i" [disabled]="task.status==='cancelled'"> <i
+                                    class="fa fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div [id]="'collapseTwo' + i" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#wrapping_header">
+
+                            <div class="task d-flex flex-column pt-2 align-items-center"
+                              *ngIf="this.task.subtasks.length > 0">
+
+                              <label class="checkbox border-info px-4 col-9"
+                                *ngFor="let subtask of this.task.subtasks; let j = index;">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                  <input class="custom-control-input" type="checkbox" [checked]="subtask.completed"
+                                    [id]="'subcheckbx_' + i + '_' + j" [ngClass]="{
+                                        'border-danger':subtask.completed===true
+                                      }" (change)="this.toggleSubtaskStatus(task, j)" />
+                                  <label class="custom-control-label" [ngClass]="{
+                                      'strike text-danger':subtask.completed===true
+                                    }" [for]="'subcheckbx_' + i + '_' + j">{{subtask.task}}
+                                  </label>
+                                  <a (click)="this.deleteSubtask(task, j)" class="pull-right"><span
+                                      class="fa fa-trash text-danger"></span></a>
+                                </div>
+
+                              </label>
+                            </div>
+                          </div>
+                          <div class="modal" tabindex="-1" role="dialog" [id]="'cancelModal200' + i">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Voulez-vous annuler ou suspendre la tâche?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Une tâche <b><i>suspendue</i></b> peut être <b><i>réactivée</i></b> à l'avenir
+                                    contrairement à une tâche <b><i>annulée</i></b></p>
+                                  <hr>
+                                  <p> L'annulation est <b><i>irreversible</i></b></p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-dark"
+                                    (click)="this.changeTaskStatus(task, 'cancelled')" data-dismiss="modal">Annuler la
+                                    tâche</button>
+                                  <button type="button" class="btn btn-primary"
+                                    (click)="this.changeTaskStatus(task, 'suspended')" data-dismiss="modal">Suspendre la
+                                    tâche</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-block text-right card-footer">
+                  <!-- <button class="mr-2 btn btn-link btn-sm">Annuler</button> -->
+                  <button class="btn btn-primary" (click)="this.resetScheme(); this.repeatScheme.repeat = false"
+                    data-toggle="modal" data-target="#addModal">Ajouter une tâche spontanée</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="masonry-item col-12" *ngIf="this.soonovertasks.length > 0">
+        <!-- #Site Visits ==================== -->
+        <div class="bd bgc-white">
+          <div class="peers fxw-nw@lg+ ai-s">
+            <div class="peer bdL p-20 w-100p@lg+ w-100p@lg-">
+              <div class="card-hover-shadow-2x mb-3 card">
+                <div class="card-header-tab card-header">
+                  <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                      class="fa fa-tasks"></i>&nbsp;Tâches Personelles Expirant Aujourd'hui</div>
+                </div>
+                <div class="scroll-area-sm">
+                  <div style="position: static;" class="ps ps--active-y">
+                    <div class="ps-content">
+                      <ul class=" list-group list-group-flush" id="wrapping_header">
+
+                        <li class="list-group-item " *ngFor="let task of this.soonovertasks; let i = index">
+                          <div class="todo-indicator badge-danger" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                        }"></div>
+                          <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                              <div class="widget-content-left mr-2">
+                                <div class="custom-checkbox custom-control">
+                                  <input class="custom-control-input" type="checkbox" [id]="'checkbox' + i"
+                                    (change)="this.toggleTaskStatus(task)" [checked]="this.task.progress===100">
+                                  <label class="custom-control-label" [for]="'checkbox' + i">&nbsp;</label>
+                                </div>
+                              </div>
+                              <div class="widget-content-left" (click)="this.repeatScheme = task" data-toggle="modal"
+                                data-target="#updateModal">
+                                <div class="widget-heading">
+                                  {{this.task.label}}
+                                  <div class="badge badge-danger ml-2" [ngClass]="{
+                                          'bg-warning': this.task.status === 'ongoing',
+                                          'bg-danger': this.task.status === 'undone',
+                                          'bg-success': this.task.status === 'done',
+                                          'bg-primary': this.task.status === 'suspended',
+                                          'bg-dark': this.task.status === 'cancelled' || this.task.status === 'late'
+                                        }">{{this.task.status}}</div>
+                                  <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                                          'bg-success': this.task.progress === 100,
+                                          'bg-danger': this.task.progress === 0
+                                        }">
+                                    {{this.task.progress | number: '1.1-1'}} {{' %'}}
+                                  </span>
+                                  <span class="ml-2 text-success special_spacing bg-primary" [ngClass]="{
+                                                'bg-warning': this.task.period === 'MONTH',
+                                                'bg-info': this.task.period === 'DAY' 
+                                                  || (this.task.period === 'WEEK' && this.task.weekdays.length === 6),
+                                                'bg-success': this.task.period === 'YEAR',
+                                                'bg-primary': this.task.period === 'WEEK' && this.task.weekdays.length !== 6
+                                              }">{{(this.task.period === 'WEEK' 
+                                                    && this.task.weekdays.length === 6)? 'DAY'
+                                                    : task.period}}
+                                  </span>
+                                </div>
+                                <div class="widget-subheading">
+                                  <span *ngIf="this.task.subtasksNumber > 0; else nosubtasks">
+                                    <i>Nombre de sous-tâches:
+                                      <span class="text-danger">
+                                        {{this.task.subtasksNumber}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <ng-template #nosubtasks>
+                                    <span class="text-danger">
+                                      Aucune sous-tâche
+                                    </span>
+                                  </ng-template>
+                                  <span class="ml-2">
+                                    <i>deadline:
+                                      <span class="text-danger">
+                                        {{this.task.deadline | date: 'EEEE dd MMMM, yyyy'}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <span class="ml-2">
+                                    <i>Période
+                                      <span class="text-danger">
+                                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                          {{this.task.cronjob}}
+                                        </span>
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <span class="ml-2"
+                                    *ngIf="task.assignerId.length > 0 && task.assignerId !== this.currentuser.uid">
+                                    <i>Assigné par
+                                      <span class="text-primary">
+                                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                          {{this.task.assignerName}}
+                                        </span>
+                                      </span>
+                                    </i>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="widget-content-right">
+                                <button class="border-0 btn-transition btn btn-outline-success" data-toggle="collapse"
+                                  attr.data-target="#collapseTwo{{i}}" aria-expanded="true"
+                                  attr.aria-controls="collapseTwo{{i}}" (click)="this.saveInCookies('collapseTwo' + i)"
+                                  [disabled]="this.task.subtasksNumber === 0">
+                                  <span class="fa fa-chevron-down"></span>
+                                </button>
+                                <button class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal"
+                                  [attr.data-target]="'#cancelModal300' + i" [disabled]="task.status==='cancelled'"> <i
+                                    class="fa fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div [id]="'collapseTwo' + i" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#wrapping_header">
+
+                            <div class="task d-flex flex-column pt-2 align-items-center"
+                              *ngIf="this.task.subtasks.length > 0">
+
+                              <label class="checkbox border-info px-4 col-9"
+                                *ngFor="let subtask of this.task.subtasks; let j = index;">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                  <input class="custom-control-input" type="checkbox" [checked]="subtask.completed"
+                                    [id]="'subcheckbx_' + i + '_' + j" [ngClass]="{
+                                        'border-danger':subtask.completed===true
+                                      }" (change)="this.toggleSubtaskStatus(task, j)" />
+                                  <label class="custom-control-label" [ngClass]="{
+                                      'strike text-danger':subtask.completed===true
+                                    }" [for]="'subcheckbx_' + i + '_' + j">{{subtask.task}}
+                                  </label>
+                                  <a (click)="this.deleteSubtask(task, j)" class="pull-right"><span
+                                      class="fa fa-trash text-danger"></span></a>
+                                </div>
+
+                              </label>
+                            </div>
+                          </div>
+                          <div class="modal" tabindex="-1" role="dialog" [id]="'cancelModal200' + i">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Voulez-vous annuler ou suspendre la tâche?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Une tâche <b><i>suspendue</i></b> peut être <b><i>réactivée</i></b> à l'avenir
+                                    contrairement à une tâche <b><i>annulée</i></b></p>
+                                  <hr>
+                                  <p> L'annulation est <b><i>irreversible</i></b></p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-dark"
+                                    (click)="this.changeTaskStatus(task, 'cancelled')" data-dismiss="modal">Annuler la
+                                    tâche</button>
+                                  <button type="button" class="btn btn-primary"
+                                    (click)="this.changeTaskStatus(task, 'suspended')" data-dismiss="modal">Suspendre la
+                                    tâche</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="masonry-item col-md-12">
+        <!-- #Todo ==================== -->
+        <div class="bd bgc-white p-20">
+          <div class="layers">
+            <div class="layer w-100 mB-10">
+              <h6 class="lh-1">Tâche récemment ajoutées</h6>
+            </div>
+            <div class="layer w-100">
+              <ul class="list-task list-group" data-role="tasklist">
+
+                <li *ngFor="let task of newlyaddedtasks; let i = index" class="list-group-item bdw-0" data-role="task">
+                  <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                    <input type="checkbox" [id]="'inputCall' + i" name="inputCheckboxesCall" class="peer"
+                      [ngModel]="this.task.completed" readonly>
+                    <label [for]="'inputCall' + i" class=" peers peer-greed js-sb ai-c" readonly>
+                      <span class="peer peer-greed">{{task.label}}</span>
+                      <span class="peer">
+                        <span class="badge badge-pill fl-r badge-success lh-0 p-10" [ngClass]="{
+                              'bg-warning': this.task.status === 'ongoing',
+                              'bg-danger': this.task.status === 'undone',
+                              'bg-success': this.task.status === 'done',
+                              'bg-primary': this.task.status === 'suspended',
+                              'bg-dark': this.task.status === 'cancelled'
+                            }">{{task.difference === 0 ? 'Aujourd\'hui': 
+                                  task.difference === 1 ? 'Hier': 
+                                  task.difference + ' jours'}}</span>
+                      </span>
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-item col-md-12">
+        <!-- #Sales Report ==================== -->
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 p-20">
+              <h6 class="lh-1">Taches dont le deadline est passé</h6>
+            </div>
+            <div class="layer w-100">
+              <div class="bgc-light-blue-500 c-white p-20">
+                <div class="peers ai-c jc-sb gap-40">
+                  <div class="peer peer-greed">
+                    <h5>30 derniers jours</h5>
+                    <p class="mB-0">Rapport</p>
+                  </div>
+                  <div class="peer">
+                    <h3 class="text-right">Rapport</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive p-20">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class=" bdwT-0">Label</th>
+                      <th class=" bdwT-0">Statut</th>
+                      <th class=" bdwT-0">Deadline</th>
+                      <th class=" bdwT-0">Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let task of this.executions">
+                      <td class="fw-600">{{task.label}}</td>
+                      <td><span class="badge bgc-red-100 c-red-700 p-10 lh-0 tt-c badge-pill" [ngClass]="{
+                            'bg-warning': this.task.status === 'ongoing',
+                            'bg-danger': this.task.status === 'undone',
+                            'bg-success': this.task.status === 'done',
+                            'bg-primary': this.task.status === 'suspended',
+                            'bg-dark': this.task.status === 'cancelled'
+                          }" style="color: white !important;">{{task.status}}</span></td>
+                      <td>{{task.deadline | date: 'EEEE dd MMMM yyyy'}}</td>
+                      <td>
+                        <span class="text-success special_spacing" [ngClass]="{
+                                'bg-warning': this.task.period === 'Mensuelle',
+                                'bg-info': this.task.period === 'Journalière' 
+                                  || (this.task.period === 'Hebdomadaire' && this.task.weekdays.length === 6),
+                                'bg-success': this.task.period === 'Année',
+                                'bg-primary': this.task.period === 'Hebdomadaire' && this.task.weekdays.length !== 6
+                              }">{{(this.task.period === 'Hebdomadaire' 
+                                    && this.task.weekdays.length === 6)? 'Journalière'
+                                    : task.period}}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="ta-c bdT w-100 p-20">
+            <a href="#">Voir toutes les tâches</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <app-add-task-dialog 
+      [repeatScheme]="this.repeatScheme" 
+      type="add"
+      [assignedAppear]="false"
+      [assignedAppear2]="false"
+      [approvedAppear]="false"
+      [workedwith]="false">
+    </app-add-task-dialog>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+    aria-hidden="true">
+    <app-add-task-dialog 
+      [repeatScheme]="this.repeatScheme" 
+      type="update"
+      [assignedAppear]="this.repeatScheme.assignedTo !== this.auth.user.id"
+      [assignedAppear2]="this.repeatScheme.assignerId.length > 0"
+      [approvedAppear]="this.repeatScheme.ApprovedBy.length > 0"
+      [workedwith]="this.repeatScheme.WorkedWith.length > 0">
+    </app-add-task-dialog>
+  </div>
+</main>

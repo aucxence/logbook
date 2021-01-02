@@ -1,0 +1,118 @@
+<div id='loader' [ngClass]="{
+    'fadeOut': this.fadeout
+}">
+  <div class="spinner"></div>
+</div>
+
+<div class="peers ai-s fxw-nw h-100vh">
+  <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv"
+    style='background-image: url("assets/images/background.jpg")'>
+    <div class="pos-a centerXY">
+      <div class="bgc-white bdrs-50p pos-r" style='width: 120px; height: 120px;'>
+        <img class="pos-a centerXY" src="assets/images/logo it.JPG" style="max-width: 75%; height: auto;" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
+    <h4 class="fw-300 c-grey-900 mB-40">Inscription</h4>
+    <form [formGroup]="form" (ngSubmit)="registerFormSubmit()">
+
+      <div class="form-group has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('surname')">
+        <label class="text-normal text-dark" for="surname">Prenom</label>
+        <div>
+          <input type="text" class="form-control" (keyup)="this.changeinput()" id="surname" formControlName="surname"
+            Placeholder='John' required>
+          <span class="glyphicon form-control-feedback" [ngClass]="formUtils.iconClassForErrorOrSuccess('name')"></span>
+
+          <div *ngIf="formUtils.showFieldError('surname')" class="text-danger">
+            <div *ngIf="form.get('surname').errors.required">Le prénom est obligatoire</div>
+            <div *ngIf="form.get('surname').errors.minlength">Le prénom doit contenir au moins 3 caractères</div>
+            <div *ngIf="form.get('surname').errors.maxlength">Le prénom doit avoir un maximum de 100 caractères</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('name')">
+        <label class="text-normal text-dark" for="name">Nom</label>
+        <div>
+          <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()" id="name"
+            formControlName="name" Placeholder='Doe' required>
+          <span class="glyphicon form-control-feedback" [ngClass]="formUtils.iconClassForErrorOrSuccess('name')"></span>
+
+          <div *ngIf="formUtils.showFieldError('name')" class="text-danger">
+            <div *ngIf="form.get('name').errors.required">Le nom est obligatoire</div>
+            <div *ngIf="form.get('name').errors.minlength">Ce champ doit contenir au moins 3 caractères</div>
+            <div *ngIf="form.get('name').errors.maxlength">Le nom doit avoir un maximum de 100 caractères</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('email')">
+        <label class="text-normal text-dark control-label" for="email">Email</label>
+
+        <div>
+          <input type="email" class="form-control" placeholder="JohnDoe@jdoe.com" formControlName="email" required>
+          <span class="glyphicon form-control-feedback"
+            [ngClass]="formUtils.iconClassForErrorOrSuccess('email')"></span>
+
+          <div *ngIf="formUtils.showFieldError('email')" class="text-danger">
+            <div *ngIf="form.get('email').errors.required">L'adresse email est obligatoire</div>
+            <div *ngIf="form.get('email').errors.email">le format d'adresse n'est pas bon</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="fonction">Fonction</label>
+        <select class="form-control" id="fonction" formControlName="fonction" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();" required>
+          <option *ngFor="let grade of this.grades; let i = index;" [value]="grade.level">
+            {{grade.fonction}}
+          </option>
+        </select>
+        <span class="glyphicon form-control-feedback"
+          [ngClass]="formUtils.iconClassForErrorOrSuccess('fonction')"></span>
+        <div *ngIf="formUtils.showFieldError('fonction')" class="text-danger">
+          <div *ngIf="form.get('fonction').errors.required">La fonction est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('password')">
+        <label for="password" class="text-normal text-dark control-label">Mot de passe</label>
+        <div>
+          <input type="password" class="form-control" id="password" formControlName="password">
+          <span class="glyphicon form-control-feedback"
+            [ngClass]="formUtils.iconClassForErrorOrSuccess('password')"></span>
+
+          <div *ngIf="formUtils.showFieldError('password')" class="text-danger">
+            <div *ngIf="form.get('password').errors.required">Le mot de passe est obligatoire</div>
+            <div *ngIf="form.get('password').errors.minlength">Le mot de passe doit contenir au moins 6 caractères</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('passwordConfirmation')">
+        <label for="passwordConfirmation" class="text-normal text-dark control-label">Confirmation Mot de passe</label>
+        <div>
+          <input type="password" class="form-control" id="passwordConfirmation" formControlName="passwordConfirmation">
+          <span class="glyphicon form-control-feedback"
+            [ngClass]="formUtils.iconClassForErrorOrSuccess('passwordConfirmation')"></span>
+
+          <div *ngIf="formUtils.showFieldError('passwordConfirmation')" class="text-danger">
+            <div *ngIf="form.get('passwordConfirmation').errors.required">Confirmez le mot de passe écrit ci-haut</div>
+            <div *ngIf="form.get('passwordConfirmation').errors.mismatch">Les 2 mots de passe ne correspondent pas</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button [disabled]="form.invalid || submitted" type="submit" class="btn btn-primary">S'inscrire</button>
+      </div>
+    </form>
+
+    <div class="d-flex flex-row-reverse mt-4">
+      <div class="d-flex flex-column">
+        Vous avez déjà un compte?
+        <a routerLink="../login" class="btn-link text-right">Connectez-vous ici</a>
+      </div>
+    </div>
+  </div>
+</div>

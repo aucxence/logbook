@@ -1,0 +1,43 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap shadow px-0 py-2">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0"
+    *ngIf="this.user && this.user.firstname !== undefined && this.useravailable === true; else waiting">{{this.user.firstname + ' ' + this.user.lastname}}</a>
+  <ng-template #waiting>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">Connecté</a>
+  </ng-template>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="btn btn-link text-white" (click)="this.signOut()">Déconnexion</a>
+    </li>
+  </ul>
+</nav>
+
+<section id="team" class="pb-5">
+  <div class="container" *ngIf="this.user && this.user.firstname !== undefined && this.useravailable === true; else patience">
+    <h5 class="section-title h1">FONCTIONALITES</h5>
+    <div class="row">
+      <div *ngFor="let dashboardcard of this.dashboardcards; let i = index" (click)="this.clicked(dashboardcard.route)"
+        class="col-xs-12 col-sm-6 col-md-4">
+        <div class="image-flip" *ngIf="this.user && this.user.modules.indexOf(this.dashboardcard.dbkey) > -1">
+          <div class="mainflip flip-0">
+            <div class="frontside">
+              <div class="card">
+                <div class="card-body text-center">
+                  <p><img class=" img-fluid" [src]="dashboardcard.image" alt="card image"></p>
+                  <h4 class="card-title">{{dashboardcard.titre}}</h4>
+                  <p class="card-text">{{dashboardcard.description}}</p>
+                  <a class="btn btn-primary btn-sm">
+                    <i class="fa fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #patience>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">Connecté</a>
+  </ng-template>
+</section>

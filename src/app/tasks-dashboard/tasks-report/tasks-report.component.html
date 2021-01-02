@@ -1,0 +1,155 @@
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top: 0!important;">
+  <div id='mainContent' class="row gap-20 masonry pos-r">
+    <div class="col-12">
+
+      <div class="masonry-item col-12">
+        <!-- #Site Visits ==================== -->
+        <div class="bd bgc-white">
+          <div class="peers fxw-nw@lg+ ai-s">
+
+            <div *ngFor="let execs of splitexecs; let j = index" class="peer bdL p-20 w-100p@lg+ w-100p@lg-">
+              <div class="card-hover-shadow-2x mb-3 card">
+                <div class="card-header-tab card-header">
+                  <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                      class="fa fa-tasks"></i>&nbsp;{{this.days[j] | date: 'EEEE dd MMMM, yyyy'}}</div>
+                </div>
+                <div class="scroll-area-sm">
+                  <div style="position: static;" class="ps ps--active-y">
+                    <div class="ps-content">
+                      <ul class=" list-group list-group-flush" id="wrapping_header">
+
+                        <li class="list-group-item " *ngFor="let task of this.execs; let i = index">
+                          <div class="todo-indicator badge-danger" [ngClass]="{
+                                              'bg-warning': this.task.status === 'ongoing',
+                                              'bg-danger': this.task.status === 'undone',
+                                              'bg-success': this.task.status === 'done',
+                                              'bg-primary': this.task.status === 'suspended',
+                                              'bg-dark': this.task.status === 'cancelled'
+                                            }"></div>
+                          <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                              <div class="widget-content-left mr-2">
+                                <div class="custom-checkbox custom-control">
+                                  <input class="custom-control-input" type="checkbox" [id]="'asscheckbox' + i"
+                                    [checked]="this.task.progress===100">
+                                  <label class="custom-control-label" [for]="'asscheckbox' + i">&nbsp;</label>
+                                </div>
+                              </div>
+                              <div class="widget-content-left">
+                                <div class="widget-heading">
+                                  {{this.task.label}}
+                                  <div class="badge badge-danger ml-2" [ngClass]="{
+                                              'bg-warning': this.task.status === 'ongoing',
+                                              'bg-danger': this.task.status === 'undone',
+                                              'bg-success': this.task.status === 'done',
+                                              'bg-primary': this.task.status === 'suspended',
+                                              'bg-dark': this.task.status === 'cancelled'
+                                            }">{{this.task.status}}</div>
+                                  <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                                              'bg-success': this.task.progress === 100,
+                                              'bg-danger': this.task.progress === 0
+                                            }">
+                                    {{this.task.progress | number: '1.1-1'}} {{' %'}}
+                                  </span>
+                                  <span class="ml-2 text-success special_spacing bg-primary" [ngClass]="{
+                                                    'bg-warning': this.task.period === 'MONTH',
+                                                    'bg-info': this.task.period === 'DAY' 
+                                                      || (this.task.period === 'WEEK' && this.task.weekdays.length === 6),
+                                                    'bg-success': this.task.period === 'YEAR',
+                                                    'bg-primary': this.task.period === 'WEEK' && this.task.weekdays.length !== 6
+                                                  }">{{(this.task.period === 'WEEK' 
+                                                        && this.task.weekdays.length === 6)? 'DAY'
+                                                        : task.period}}
+                                  </span>
+                                </div>
+                                <div class="widget-subheading">
+                                  <span *ngIf="this.task.subtasksNumber > 0; else nosubtasks">
+                                    <i>Nombre de sous-tâches:
+                                      <span class="text-danger">
+                                        {{this.task.subtasksNumber}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <ng-template #nosubtasks>
+                                    <span class="text-danger">
+                                      Aucune sous-tâche
+                                    </span>
+                                  </ng-template>
+                                  <span class="ml-2">
+                                    <i>deadline:
+                                      <span class="text-danger">
+                                        {{this.task.deadline | date: 'EEEE dd MMMM, yyyy'}}
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <span class="ml-2">
+                                    <i>Période
+                                      <span class="text-danger">
+                                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                          {{this.task.cronjob}}
+                                        </span>
+                                      </span>
+                                    </i>
+                                  </span>
+                                  <span class="ml-2">
+                                    <i>Assigné à
+                                      <span class="text-primary">
+                                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                          {{this.task.assignedToName}}
+                                        </span>
+                                      </span>
+                                    </i>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="widget-content-right">
+                                <button class="border-0 btn-transition btn btn-outline-success" data-toggle="collapse"
+                                  attr.data-target="#collapseTwo{{i}}" aria-expanded="true"
+                                  attr.aria-controls="collapseTwo{{i}}"
+                                  [disabled]="this.task.subtasksNumber === 0">
+                                  <span class="fa fa-chevron-down"></span>
+                                </button>
+                                <button class="border-0 btn-transition btn btn-outline-danger"
+                                  [attr.data-target]="'#cancelModal300' + i" [disabled]="task.status==='cancelled'"> <i
+                                    class="fa fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div [id]="'collapseTwo' + i" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#wrapping_header">
+
+                            <div class="task d-flex flex-column pt-2 align-items-center"
+                              *ngIf="this.task.subtasks.length > 0">
+
+                              <label class="checkbox border-info px-4 col-9"
+                                *ngFor="let subtask of this.task.subtasks; let j = index;">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                  <input class="custom-control-input" type="checkbox" [checked]="subtask.completed"
+                                    [id]="'subcheckbx_' + i + '_' + j" [ngClass]="{
+                                            'border-danger':subtask.completed===true
+                                          }" />
+                                  <label class="custom-control-label" [ngClass]="{
+                                          'strike text-danger':subtask.completed===true
+                                        }" [for]="'subcheckbx_' + i + '_' + j">{{subtask.task}}
+                                  </label>
+                                </div>
+
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

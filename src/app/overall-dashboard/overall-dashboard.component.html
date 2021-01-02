@@ -1,0 +1,451 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap shadow px-0 py-2">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" *ngIf="this.useravailable === true; else waiting">{{this.currentuser.displayName}}</a>
+  <ng-template #waiting>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">Connecté</a>
+  </ng-template>
+  
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="btn btn-link text-white" (click)="this.signOut()">Déconnexion</a>
+    </li>
+  </ul>
+</nav>
+  
+  <div class="container-fluid">
+    <div class="row">
+  
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+  
+            <li class="nav-item">
+              <a class="nav-link d-flex align-content-center" data-target="#Instant-Transfer" 
+                  [ngClass]="{'text-danger text-uppercase': true}" style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+                (click)="this.changecompany(0, 'courriersortant/' + this.companies.itransfer)"> 
+                <div class="w-100 my-auto">Instant Transfer</div>
+                <span class="dropdown-toggle"></span>
+              </a>
+              <ul class="collapse list-unstyled mx-4 shadow fade-in-out scrollbar-hide" id="Instant-Transfer" [ngClass]="{'show fade-in': this.activecompany === 0}"  style="background-color: white; border-radius: 10px; padding: 4px; width: max-content; ">
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1120)" [ngClass]="{'active': this.activepage === 1120}" [routerLink]="['./bordereaulivraison', this.companies.itransfer]" class="nav-link text-indent-4">Bordereau de livraison</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1111)" [ngClass]="{'active': this.activepage === 1111}" [routerLink]="['./contratpartenariat', this.companies.itransfer]" class="nav-link text-indent-4">Contrat de partenariat</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1)" [ngClass]="{'active': this.activepage === 1}" [routerLink]="['./courriersortant', this.companies.itransfer]" class="nav-link text-indent-4">Courrier Sortant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(2)" [ngClass]="{'active': this.activepage === 2}" [routerLink]="['./courrierentrant', this.companies.itransfer]" class="nav-link text-indent-4">Courrier entrant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1113)" [ngClass]="{'active': this.activepage === 1113}" [routerLink]="['./dechargecc', this.companies.itransfer]" class="nav-link text-indent-4">Décharge C. Courante</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1114)" [ngClass]="{'active': this.activepage === 1114}" [routerLink]="['./dechargemtrl', this.companies.itransfer]" class="nav-link text-indent-4">Décharge Matérielle</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1117)" [ngClass]="{'active': this.activepage === 1117}" [routerLink]="['./notedisciplinaire', this.companies.itransfer]" class="nav-link text-indent-4">Document disciplinaire</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1116)" [ngClass]="{'active': this.activepage === 1116}" [routerLink]="['./facturedefinitive', this.companies.itransfer]" class="nav-link text-indent-4">Facture définitive</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1119)" [ngClass]="{'active': this.activepage === 1119}" [routerLink]="['./factureproformat', this.companies.itransfer]" class="nav-link text-indent-4">Facture pro forma</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1118)" [ngClass]="{'active': this.activepage === 1118}" [routerLink]="['./lettreadministrative', this.companies.itransfer]" class="nav-link text-indent-4">Lettre administrative</a>
+                </li>
+                <hr class="divider mx-4">
+                
+                <li>
+                  <a (click)="this.changepage(1115)" [ngClass]="{'active': this.activepage === 1115}" [routerLink]="['./noteservice', this.companies.itransfer]" class="nav-link text-indent-4">Note de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(8)" [ngClass]="{'active': this.activepage === 8}" [routerLink]="['./offreservice', this.companies.itransfer]" class="nav-link text-indent-4">Offre de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1112)" [ngClass]="{'active': this.activepage === 1112}" [routerLink]="['./ordremission', this.companies.itransfer]" class="nav-link text-indent-4">Ordre de mission</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(1121)" [ngClass]="{'active': this.activepage === 1121}" [routerLink]="['./procedure', this.companies.itransfer]" class="nav-link text-indent-4">Procédure</a>
+                </li>
+                <hr class="divider mx-4">
+              </ul>
+            </li>
+            
+            <hr class="divider mx-4">
+
+            <li class="nav-item">
+              <a class="nav-link d-flex align-content-center" data-target="#Technologie-Medicale"  [ngClass]="{'text-secondary text-uppercase': true}" aria-expanded="false" style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+              (click)="this.changecompany(10, 'courriersortant/' + this.companies.technomed)">
+                <div class="w-100 my-auto">Technologie Medicale</div>
+                <span class="dropdown-toggle"></span>
+              </a>
+              <ul class="collapse list-unstyled mx-4 shadow fade-in-out scrollbar-hide" id="Technologie-Medicale" [ngClass]="{'show fade-in': this.activecompany === 10}" style="background-color: white; border-radius: 10px; padding: 4px; width: max-content; ">
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(120)" [ngClass]="{'active': this.activepage === 120}" [routerLink]="['./bordereaulivraison', this.companies.technomed]" class="nav-link text-indent-4">Bordereau de livraison</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(111)" [ngClass]="{'active': this.activepage === 111}" [routerLink]="['./contratpartenariat', this.companies.technomed]" class="nav-link text-indent-4">Contrat de partenariat</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(11)" [ngClass]="{'active': this.activepage === 11}" [routerLink]="['./courriersortant', this.companies.technomed]" class="nav-link text-indent-4">Courrier Sortant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(12)" [ngClass]="{'active': this.activepage === 12}" [routerLink]="['./courrierentrant', this.companies.technomed]" class="nav-link text-indent-4">Courrier entrant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(113)" [ngClass]="{'active': this.activepage === 113}" [routerLink]="['./dechargecc', this.companies.technomed]" class="nav-link text-indent-4">Décharge C. Courante</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(114)" [ngClass]="{'active': this.activepage === 114}" [routerLink]="['./dechargemtrl', this.companies.technomed]" class="nav-link text-indent-4">Décharge Matérielle</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(117)" [ngClass]="{'active': this.activepage === 117}" [routerLink]="['./notedisciplinaire', this.companies.technomed]" class="nav-link text-indent-4">Document disciplinaire</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(116)" [ngClass]="{'active': this.activepage === 116}" [routerLink]="['./facturedefinitive', this.companies.technomed]" class="nav-link text-indent-4">Facture définitive</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(119)" [ngClass]="{'active': this.activepage === 119}" [routerLink]="['./factureproformat', this.companies.technomed]" class="nav-link text-indent-4">Facture pro forma</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(118)" [ngClass]="{'active': this.activepage === 118}" [routerLink]="['./lettreadministrative', this.companies.technomed]" class="nav-link text-indent-4">Lettre administrative</a>
+                </li>
+                <hr class="divider mx-4">
+                
+                <li>
+                  <a (click)="this.changepage(115)" [ngClass]="{'active': this.activepage === 115}" [routerLink]="['./noteservice', this.companies.technomed]" class="nav-link text-indent-4">Note de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(110)" [ngClass]="{'active': this.activepage === 110}" [routerLink]="['./offreservice', this.companies.technomed]" class="nav-link text-indent-4">Offre de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(112)" [ngClass]="{'active': this.activepage === 112}" [routerLink]="['./ordremission', this.companies.technomed]" class="nav-link text-indent-4">Ordre de mission</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(121)" [ngClass]="{'active': this.activepage === 121}" [routerLink]="['./procedure', this.companies.technomed]" class="nav-link text-indent-4">Procédure</a>
+                </li>
+                <hr class="divider mx-4">
+              </ul>
+            </li>
+
+            <hr class="divider mx-4">
+  
+            <li class="nav-item">
+              <a class="nav-link d-flex align-content-center" data-target="#UCash"  [ngClass]="{'text-warning text-uppercase': true}" aria-expanded="false"  style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+                (click)="this.changecompany(20, 'courriersortant/' + this.companies.unicash)">
+                <div class="w-100 my-auto">Universal Cash</div>
+                <span class="dropdown-toggle"></span>
+              </a>
+              <ul class="collapse list-unstyled mx-4 shadow fade-in-out scrollbar-hide" id="UCash" [ngClass]="{'show fade-in': this.activecompany === 20}" style="background-color: white; border-radius: 10px; padding: 4px; width: max-content; ">
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(220)" [ngClass]="{'active': this.activepage === 220}" [routerLink]="['./bordereaulivraison', this.companies.unicash]" class="nav-link text-indent-4">Bordereau de livraison</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(211)" [ngClass]="{'active': this.activepage === 211}" [routerLink]="['./contratpartenariat', this.companies.unicash]" class="nav-link text-indent-4">Contrat de partenariat</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(21)" [ngClass]="{'active': this.activepage === 21}" [routerLink]="['./courriersortant', this.companies.unicash]" class="nav-link text-indent-4">Courrier Sortant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(22)" [ngClass]="{'active': this.activepage === 22}" [routerLink]="['./courrierentrant', this.companies.unicash]" class="nav-link text-indent-4">Courrier entrant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(213)" [ngClass]="{'active': this.activepage === 213}" [routerLink]="['./dechargecc', this.companies.unicash]" class="nav-link text-indent-4">Décharge C. Courante</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(214)" [ngClass]="{'active': this.activepage === 214}" [routerLink]="['./dechargemtrl', this.companies.unicash]" class="nav-link text-indent-4">Décharge Matérielle</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(217)" [ngClass]="{'active': this.activepage === 217}" [routerLink]="['./notedisciplinaire', this.companies.unicash]" class="nav-link text-indent-4">Document disciplinaire</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(216)" [ngClass]="{'active': this.activepage === 216}" [routerLink]="['./facturedefinitive', this.companies.unicash]" class="nav-link text-indent-4">Facture définitive</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(219)" [ngClass]="{'active': this.activepage === 219}" [routerLink]="['./factureproformat', this.companies.unicash]" class="nav-link text-indent-4">Facture pro forma</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(218)" [ngClass]="{'active': this.activepage === 218}" [routerLink]="['./lettreadministrative', this.companies.unicash]" class="nav-link text-indent-4">Lettre administrative</a>
+                </li>
+                <hr class="divider mx-4">
+                
+                <li>
+                  <a (click)="this.changepage(215)" [ngClass]="{'active': this.activepage === 215}" [routerLink]="['./noteservice', this.companies.unicash]" class="nav-link text-indent-4">Note de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(28)" [ngClass]="{'active': this.activepage === 28}" [routerLink]="['./offreservice', this.companies.unicash]" class="nav-link text-indent-4">Offre de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(212)" [ngClass]="{'active': this.activepage === 212}" [routerLink]="['./ordremission', this.companies.unicash]" class="nav-link text-indent-4">Ordre de mission</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(221)" [ngClass]="{'active': this.activepage === 221}" [routerLink]="['./procedure', this.companies.unicash]" class="nav-link text-indent-4">Procédure</a>
+                </li>
+                <hr class="divider mx-4">
+              </ul>
+            </li>
+
+            <hr class="divider mx-4">
+
+            <li class="nav-item">
+              <a class="nav-link d-flex align-content-center" data-target="#kte"  [ngClass]="{'text-success text-uppercase': true}" aria-expanded="false" style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+              (click)="this.changecompany(30, 'courriersortant/' + this.companies.kamsu)">
+                <div class="w-100 my-auto">Kamsu T. Eugenie</div>
+                <span class="dropdown-toggle"></span>
+              </a>
+              <ul class="collapse list-unstyled mx-4 shadow fade-in-out scrollbar-hide" id="kte" [ngClass]="{'show fade-in': this.activecompany === 30}" style="background-color: white; border-radius: 10px; padding: 4px; width: max-content; ">
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(320)" [ngClass]="{'active': this.activepage === 320}" [routerLink]="['./bordereaulivraison', this.companies.kamsu]" class="nav-link text-indent-4">Bordereau de livraison</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(311)" [ngClass]="{'active': this.activepage === 311}" [routerLink]="['./contratpartenariat', this.companies.kamsu]" class="nav-link text-indent-4">Contrat de partenariat</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(31)" [ngClass]="{'active': this.activepage === 31}" [routerLink]="['./courriersortant', this.companies.kamsu]" class="nav-link text-indent-4">Courrier Sortant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(32)" [ngClass]="{'active': this.activepage === 32}" [routerLink]="['./courrierentrant', this.companies.kamsu]" class="nav-link text-indent-4">Courrier entrant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(313)" [ngClass]="{'active': this.activepage === 313}" [routerLink]="['./dechargecc', this.companies.kamsu]" class="nav-link text-indent-4">Décharge C. Courante</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(314)" [ngClass]="{'active': this.activepage === 314}" [routerLink]="['./dechargemtrl', this.companies.kamsu]" class="nav-link text-indent-4">Décharge Matérielle</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(317)" [ngClass]="{'active': this.activepage === 317}" [routerLink]="['./notedisciplinaire', this.companies.kamsu]" class="nav-link text-indent-4">Document disciplinaire</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(316)" [ngClass]="{'active': this.activepage === 316}" [routerLink]="['./facturedefinitive', this.companies.kamsu]" class="nav-link text-indent-4">Facture définitive</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(319)" [ngClass]="{'active': this.activepage === 319}" [routerLink]="['./factureproformat', this.companies.kamsu]" class="nav-link text-indent-4">Facture pro forma</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(318)" [ngClass]="{'active': this.activepage === 318}" [routerLink]="['./lettreadministrative', this.companies.kamsu]" class="nav-link text-indent-4">Lettre administrative</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(315)" [ngClass]="{'active': this.activepage === 315}" [routerLink]="['./noteservice', this.companies.kamsu]" class="nav-link text-indent-4">Note de service</a>
+                </li>
+                <hr class="divider mx-4">
+                
+                <li>
+                  <a (click)="this.changepage(38)" [ngClass]="{'active': this.activepage === 38}" [routerLink]="['./offreservice', this.companies.kamsu]" class="nav-link text-indent-4">Offre de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(312)" [ngClass]="{'active': this.activepage === 312}" [routerLink]="['./ordremission', this.companies.kamsu]" class="nav-link text-indent-4">Ordre de mission</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(321)" [ngClass]="{'active': this.activepage === 321}" [routerLink]="['./procedure', this.companies.kamsu]" class="nav-link text-indent-4">Procédure</a>
+                </li>
+                <hr class="divider mx-4">
+              </ul>
+            </li>
+
+            <hr class="divider mx-4">
+
+            <li class="nav-item">
+              <a class="nav-link d-flex align-content-center" data-target="#Instant-Transfer" 
+                  [ngClass]="{'text-uppercase': true}" style="color: orange;" style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+                (click)="this.changecompany(50, 'courriersortant/' + this.companies.muffa)"> 
+                <div class="w-100 my-auto">MUFFA MC2 KYE OSSI</div>
+                <span class="dropdown-toggle"></span>
+              </a>
+              <ul class="collapse list-unstyled mx-4 shadow fade-in-out scrollbar-hide" id="Instant-Transfer" [ngClass]="{'show fade-in': this.activecompany === 50}"  style="background-color: white; border-radius: 10px; padding: 4px; width: max-content; ">
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(520)" [ngClass]="{'active': this.activepage === 520}" [routerLink]="['./bordereaulivraison', this.companies.muffa]" class="nav-link text-indent-4">Bordereau de livraison</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(511)" [ngClass]="{'active': this.activepage === 511}" [routerLink]="['./contratpartenariat', this.companies.muffa]" class="nav-link text-indent-4">Contrat de partenariat</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(51)" [ngClass]="{'active': this.activepage === 51}" [routerLink]="['./courriersortant', this.companies.muffa]" class="nav-link text-indent-4">Courrier Sortant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(52)" [ngClass]="{'active': this.activepage === 52}" [routerLink]="['./courrierentrant', this.companies.muffa]" class="nav-link text-indent-4">Courrier entrant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(513)" [ngClass]="{'active': this.activepage === 513}" [routerLink]="['./dechargecc', this.companies.muffa]" class="nav-link text-indent-4">Décharge C. Courante</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(514)" [ngClass]="{'active': this.activepage === 514}" [routerLink]="['./dechargemtrl', this.companies.muffa]" class="nav-link text-indent-4">Décharge Matérielle</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(517)" [ngClass]="{'active': this.activepage === 517}" [routerLink]="['./notedisciplinaire', this.companies.muffa]" class="nav-link text-indent-4">Document disciplinaire</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(519)" [ngClass]="{'active': this.activepage === 519}" [routerLink]="['./factureproformat', this.companies.muffa]" class="nav-link text-indent-4">Facture pro forma</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(516)" [ngClass]="{'active': this.activepage === 516}" [routerLink]="['./facturedefinitive', this.companies.muffa]" class="nav-link text-indent-4">Facture définitive</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(518)" [ngClass]="{'active': this.activepage === 518}" [routerLink]="['./lettreadministrative', this.companies.muffa]" class="nav-link text-indent-4">Lettre administrative</a>
+                </li>
+                <hr class="divider mx-4">
+                
+                <li>
+                  <a (click)="this.changepage(515)" [ngClass]="{'active': this.activepage === 515}" [routerLink]="['./noteservice', this.companies.muffa]" class="nav-link text-indent-4">Note de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(58)" [ngClass]="{'active': this.activepage === 58}" [routerLink]="['./offreservice', this.companies.muffa]" class="nav-link text-indent-4">Offre de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(512)" [ngClass]="{'active': this.activepage === 512}" [routerLink]="['./ordremission', this.companies.muffa]" class="nav-link text-indent-4">Ordre de mission</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(521)" [ngClass]="{'active': this.activepage === 521}" [routerLink]="['./procedure', this.companies.muffa]" class="nav-link text-indent-4">Procédure</a>
+                </li>
+                <hr class="divider mx-4">
+              </ul>
+            </li>
+            
+            <hr class="divider mx-4">
+  
+            <li class="nav-item">
+              <a class="nav-link d-flex align-content-center" data-target="#biostar"  [ngClass]="{'text-info text-uppercase': true}" aria-expanded="false" style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+              (click)="this.changecompany(40, 'courriersortant/' + this.companies.biostar)">
+                <div class="w-100 my-auto">BioStar</div>
+                <span class="dropdown-toggle"></span>
+              </a>
+              <ul class="collapse list-unstyled mx-4 shadow fade-in-out scrollbar-hide" id="biostar" [ngClass]="{'show fade-in': this.activecompany === 40}" style="background-color: white; border-radius: 10px; padding: 4px; width: max-content; ">
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(420)" [ngClass]="{'active': this.activepage === 420}" [routerLink]="['./bordereaulivraison', this.companies.biostar]" class="nav-link text-indent-4">Bordereau de livraison</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(411)" [ngClass]="{'active': this.activepage === 411}" [routerLink]="['./contratpartenariat', this.companies.biostar]" class="nav-link text-indent-4">Contrat de partenariat</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(41)" [ngClass]="{'active': this.activepage === 41}" [routerLink]="['./courriersortant', this.companies.biostar]" class="nav-link text-indent-4">Courrier Sortant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(42)" [ngClass]="{'active': this.activepage === 42}" [routerLink]="['./courrierentrant', this.companies.biostar]" class="nav-link text-indent-4">Courrier entrant</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(413)" [ngClass]="{'active': this.activepage === 413}" [routerLink]="['./dechargecc', this.companies.biostar]" class="nav-link text-indent-4">Décharge C. Courante</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(414)" [ngClass]="{'active': this.activepage === 414}" [routerLink]="['./dechargemtrl', this.companies.biostar]" class="nav-link text-indent-4">Décharge Matérielle</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(417)" [ngClass]="{'active': this.activepage === 417}" [routerLink]="['./notedisciplinaire', this.companies.biostar]" class="nav-link text-indent-4">Document disciplinaire</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(416)" [ngClass]="{'active': this.activepage === 416}" [routerLink]="['./facturedefinitive', this.companies.biostar]" class="nav-link text-indent-4">Facture définitive</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(419)" [ngClass]="{'active': this.activepage === 419}" [routerLink]="['./factureproformat', this.companies.biostar]" class="nav-link text-indent-4">Facture pro forma</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(418)" [ngClass]="{'active': this.activepage === 418}" [routerLink]="['./lettreadministrative', this.companies.biostar]" class="nav-link text-indent-4">Lettre administrative</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(415)" [ngClass]="{'active': this.activepage === 415}" [routerLink]="['./noteservice', this.companies.biostar]" class="nav-link text-indent-4">Note de service</a>
+                </li>
+                <hr class="divider mx-4">
+                
+                <li>
+                  <a (click)="this.changepage(412)" [ngClass]="{'active': this.activepage === 412}" [routerLink]="['./ordremission', this.companies.biostar]" class="nav-link text-indent-4">Ordre de mission</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(410)" [ngClass]="{'active': this.activepage === 410}" [routerLink]="['./offreservice', this.companies.biostar]" class="nav-link text-indent-4">Offre de service</a>
+                </li>
+                <hr class="divider mx-4">
+                <li>
+                  <a (click)="this.changepage(421)" [ngClass]="{'active': this.activepage === 421}" [routerLink]="['./procedure', this.companies.biostar]" class="nav-link text-indent-4">Procédure</a>
+                </li>
+                <hr class="divider mx-4">
+              </ul>
+            </li>
+
+            <hr class="divider mx-4">
+          </ul>
+        </div>
+      </nav>
+      
+    </div>
+    <router-outlet></router-outlet>
+  </div>  
+  
+  

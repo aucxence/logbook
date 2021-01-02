@@ -1,0 +1,39 @@
+[
+    {
+      "taskid": "5ee7481e7d246a151189dd9f",
+      "label": "tempor proident aute",
+      "assignerId": "5ee7481ed766bcb4b9e3ea7c",
+      "assignerName": "Morgan Waters",
+      "assignedTo": "5ee7481e55734384fcd46f4c",
+      "assignedToName": "Nichols Scott",
+      "projectId": "5ee7481efc66bca89eab05f4",
+      "ProjectTitle": "Lorem culpa",
+      "projectStatus": true,
+      "creationDate": "2020-04-03",
+      "deadline": "2020-06-15",
+      "description": "Tempor sunt quis et labore et tempor do nulla enim sint. Deserunt minim esse excepteur velit. Fugiat aute est tempor esse. Elit deserunt ut cupidatat velit quis eu officia do reprehenderit pariatur dolore proident. Consequat et adipisicing fugiat culpa elit esse ad proident veniam sunt velit est.\r\n",
+      "subtasks": [],
+      "subtasksNumber": 3,
+      "completed": true,
+      "progress": 100,
+      "status": "done",
+      "CreatedBy": "5ee7481ee767a37f156bd90a",
+      "ApprovedBy": "5ee7481e8d41c969fbe5eeb6",
+      "repeat": true,
+      "every": 2,
+      "period": "DAY",
+      "monthlyOption": "WEEKDAY",
+      "startingDate": "2020-01-24",
+      "startingMonth": "OCTOBRE",
+      "startingYear": "5ee7481eecf027f45ae47fb7",
+      "HourTime": "",
+      "weekdays": [
+        4,
+        2,
+        6
+      ],
+      "monthday": 16,
+      "dayOrder": 4,
+      "dayofweek": 5
+    }
+  ]

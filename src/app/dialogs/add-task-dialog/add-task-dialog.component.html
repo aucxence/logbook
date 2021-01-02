@@ -1,0 +1,379 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{this.repeatScheme.label.length === 0? 'Insérer une nouvelle tâche ': this.repeatScheme.label}}
+          <span class="text-danger" *ngIf="this.repeatScheme.label.length === 0; else naturetache">
+            {{this.repeatScheme.repeat === false ? 'ponctuelle': 'répétitive'}}
+          </span>
+          <ng-template #naturetache>
+            <span class="text-danger">
+              {{this.repeatScheme.repeat === false ? ': tâche ponctuelle': ': tâche répétitive'}}
+            </span>
+          </ng-template>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="height: 70vh; overflow: auto;">
+        <div class="bg-white border">
+
+          <div class="border-bottom p-4 d-flex flex-row justify-content-between align-items-center">
+            <div>
+              <div class="row">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                  <input type="checkbox" class="custom-control-input" [(ngModel)]="this.repeatScheme.completed"
+                    (click)="this.repeatScheme.manageAllSubtasks()" id="abc">
+                  <label class="custom-control-label" id="abcd" for="abc"></label>
+                </div>
+
+              </div>
+            </div>
+            <div class="ml-2">
+              <input placeholder="Qu'avez-vous à faire?" class="removeOutline" [(ngModel)]="this.repeatScheme.label"
+                type="text" id="customControlAutosizing" size="45" />
+              <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                'bg-success': this.repeatScheme.progress === 100,
+                'bg-danger': this.repeatScheme.progress === 0
+              }">
+                {{this.repeatScheme.progress | number: '1.1-1'}}%
+              </span>
+              <span class="ml-2 badge badge-warning" style="color: white!important;" [ngClass]="{
+                'bg-success': this.repeatScheme.progress === 100,
+                'bg-danger': this.repeatScheme.progress === 0
+              }">
+                {{this.repeatScheme.status}}
+              </span>
+            </div>
+            <div><i class="fa fa-ellipsis-h" style="font-size: 1rem;"></i></div>
+          </div>
+
+          <div class="border-bottom px-4 py-4 d-flex flex-row justify-content-between align-items-center">
+
+            <div class="row align-items-center">
+              <img class="w-3r mr-2" style="border-radius: 5px;" src="assets/images/blank-profile-picture.png"
+                alt="">
+              <label *ngIf="this.assignedAppear === false || this.repeatScheme.assignedTo.length === 0; 
+                else assignedToName" style="color: blue; font-weight: bold;"
+                (click)="this.updateAssignedAppear()">Assignée à...</label>
+              <ng-template #assignedToName>
+                <div class="d-flex align-items-center">
+                  <ng2-completer inputClass="form-control my-auto" matchClass="font-weight-bold" autoMatch="true"
+                    [(ngModel)]="this.repeatScheme.assignedToName" [maxChars]="3" autofocus="true"
+                    (focusout)="this.updateAssignedAppear()" [datasource]="this.dataService" [minSearchLength]="0"
+                    (selected)="updateAssignerAssignee($event)">
+                  </ng2-completer>`
+                </div>
+              </ng-template>
+            </div>
+
+            <div>
+              <div class="row align-items-center">
+                <img class="w-3r mr-2" style="border-radius: 5px;"
+                  src="assets/images/blank-profile-picture.png" alt="">
+                <label *ngIf="this.assignedAppear2 === false || this.repeatScheme.assignerId === this.localauth.user.id; 
+                  else assignedByName" style="color: red; font-weight: bold;"
+                  (click)="this.updateAssignedAppear2()">Assignée par...</label>
+                <ng-template #assignedByName>
+                  <div class="d-flex align-items-center">
+                    <ng2-completer inputClass="form-control my-auto" matchClass="font-weight-bold" autoMatch="true"
+                      [(ngModel)]="this.repeatScheme.assignerName" [maxChars]="3" autofocus="true"
+                      (focusout)="this.updateAssignedAppear2()" [datasource]="this.dataService"
+                      [minSearchLength]="0" (selected)="updateAssignerAssignee2($event)">
+                    </ng2-completer>`
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div (click)="this.updateRepeatMode(); this.reschedule()" class="d-flex justify-content-center align-items-center border p-2"
+              style="border-radius: 5px;" [ngClass]="{'border-primary': this.repeatScheme.repeat === true}">
+              <div class="fa fa-repeat" style="font-weight: blue; font-size: 1.25rem;"
+                [ngClass]="this.repeatScheme.repeat === false ? 'text-dark' : 'text-primary'"></div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <div class="border-bottom px-4 py-4 d-flex flex-row justify-content-between align-items-center">
+            <div class="col-12">
+              <div>
+                <form class="add-task">
+                  <div class="form-actions">
+                    <div class="input-group">
+                      <input type="text" class="form-control border-primary" name="comment"
+                        [(ngModel)]="this.currentsubtask" placeholder="Comment vous organiserez-vous?">
+                      <div class="input-group-btn">
+                        <button class="btn btn-outline-primary" type="submit" (click)="this.addSubTask()"
+                          [disabled]="this.currentsubtask.length === 0">
+                          <span class="fa fa-plus-circle">
+                          </span>
+                          &nbsp;Ajouter
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <div class="task d-flex flex-column pt-2 align-items-center"
+                  *ngIf="this.repeatScheme.subtasks.length > 0">
+
+                  
+
+                  <label class="checkbox border-info px-4 col-9"
+                    *ngFor="let task of this.repeatScheme.subtasks; let i = index;">
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                      <input class="custom-control-input" type="checkbox" [checked]="task.completed"
+                        (change)="this.repeatScheme.toggleSubtaskStatus(i)" [id]="'subtaskcheck' + i" [ngClass]="{
+                        'border-danger':task.completed===true
+                      }" />
+                      <label class="custom-control-label" [ngClass]="{
+                      'strike text-danger':task.completed===true
+                    }" [for]="'subtaskcheck' + i">{{task.task}}</label>
+                      <a (click)="this.repeatScheme.deleteSubtask(i)" class="pull-right"><span
+                          class="fa fa-trash text-danger"></span></a>
+                    </div>
+
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div [hidden]="this.repeatScheme.repeat === false" class="border-bottom px-4 py-4">
+            <div class="row">
+              <div class="col-2">Chaque</div>
+              <div class="col-5">
+                <input type="number" [(ngModel)]="this.repeatScheme.every" (change)="this.reschedule()"
+                  class="form-control">
+              </div>
+              <div class="col-5">
+                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect"
+                  [(ngModel)]="this.repeatScheme.period" (change)="this.reschedule()">
+                  <option selected value="DAY">jour</option>
+                  <option value="WEEK">Semaine</option>
+                  <option value="MONTH">Mois</option>
+                  <option value="YEAR">Année</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div [hidden]="this.repeatScheme.repeat === false || this.repeatScheme.period !== 'MONTH'"
+            class="border-bottom px-4 pt-4">
+            <div>
+              <fieldset class="form-group row">
+                <div class="col-sm-10">
+                  <div class="form-group row pb-4 px-4">
+                    <div class="col-2">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                        value="STRAIGHTDATE" 
+                        [(ngModel)]="this.repeatScheme.monthlyOption"
+                        (ngModelChange)="this.reschedule()">
+                    </div>
+                    <div class="col-10">
+                      <select class="custom-select mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="this.repeatScheme.monthday"
+                        (change)="this.reschedule()"
+                        [disabled]="this.repeatScheme.monthlyOption !== 'STRAIGHTDATE'">
+                        <option *ngFor="let day of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 
+                      12, 13, 14, 15, 16, 17, 18, 19, 
+                      20, 21, 22, 23, 24, 25, 26, 27, 
+                      28, 29, 30, 31]" [value]="day" [selected]="day === 1">jour {{day}}</option>
+                        <option value="32">Dernier jour</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row px-4">
+                    <div class="col-2">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                        value="WEEKDAY" 
+                        [(ngModel)]="this.repeatScheme.monthlyOption" 
+                        (ngModelChange)="this.reschedule()">
+                    </div>
+
+                    <div class="col-10">
+                      <div class="row">
+                        <div class="col-6">
+                          <select class="custom-select " [(ngModel)]="this.repeatScheme.dayOrder"
+                            (change)="this.reschedule()" [disabled]="this.repeatScheme.monthlyOption !== 'WEEKDAY'">
+                            <option
+                              *ngFor="let day of [{a: 1, b: 'Premier'}, {a: 2, b: 'Deuxième'}, {a: 3, b: 'Troisième'}, {a: 4, b: 'Quatrième'}, {a: 5, b: 'Dernier'}]"
+                              [value]="day.a" [selected]="day.a === 1">{{day.b}}</option>
+                          </select>
+                        </div>
+
+                        <div class="col-6">
+                          <select class="custom-select" [(ngModel)]="this.repeatScheme.dayofweek"
+                            (change)="this.reschedule()" [disabled]="this.repeatScheme.monthlyOption !== 'WEEKDAY'">
+                            <option *ngFor="let day of this.days; let i = index" [value]="i">{{day}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="border-bottom px-4 py-4" [hidden]="this.repeatScheme.repeat === true">
+            <div class="form-group row">
+              <label for="deadline" class="col-4 col-form-label">Deadline</label>
+              <div class="col-8">
+                <input #deadline class="form-control text-primary" type="date" id="deadline"
+                  [ngModel]="this.repeatScheme.deadline | date: 'yyyy-MM-dd'" (ngModelChange)="this.spontaneousUpdate(deadline.value)">
+              </div>
+            </div>
+          </div>
+
+          <div [hidden]="this.repeatScheme.repeat === false || this.repeatScheme.period !== 'WEEK'"
+            class="border-bottom px-4 py-4">
+
+            <div class="form-group row justify-content-around align-items-center container">
+              <div
+                *ngFor="let day of [{number: 1, day: 'L'}, {number: 2, day: 'M'}, {number: 3, day: 'M'}, {number: 4, day: 'J'}, {number: 5, day: 'V'}, {number: 6, day: 'S'}, {number: 7, day: 'D'}]"
+                style="width: 2rem; height: 2rem; border-radius: 50%;"
+                class=" border d-flex justify-content-around align-items-center" [ngClass]="{
+                  'bg-primary text-white border-0': this.repeatScheme.weekdays.includes(day.number)
+                }" (click)="this.updateWeekDay(day.number)">
+                {{day.day}}
+              </div>
+            </div>
+          </div>
+
+          <div class="border-bottom px-4 py-4"
+            [hidden]="this.repeatScheme.repeat === false || (this.repeatScheme.period !== 'WEEK' && this.repeatScheme.period !== 'DAY')">
+
+            <div class="form-group row">
+              <label for="startingDate" class="col-4 col-form-label">A partir du</label>
+              <div class="col-8">
+                <input class="form-control" type="date" id="startingDate"
+                  [ngModel]="this.repeatScheme.startingDate | date: 'yyyy-MM-dd'" (ngModelChange)="this.repeatScheme.startingDate = setToDate($event); this.reschedule()">
+              </div>
+            </div>
+          </div>
+
+          <div class="border-bottom px-4 py-4"
+            [hidden]="this.repeatScheme.repeat === false || this.repeatScheme.period !== 'MONTH'">
+            <div class="form-group row">
+              <label for="startingDate" class="col-4 col-form-label">A partir de</label>
+              <div class="col-8">
+                <select class="custom-select" [(ngModel)]="this.repeatScheme.startingMonth"
+                  (change)="this.reschedule()">
+                  <option *ngFor="let month of months; let i = index" [value]="i + 1">{{month}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-bottom px-4 py-4"
+            [hidden]="this.repeatScheme.repeat === false || this.repeatScheme.period !== 'YEAR'">
+
+            <!-- <div class="form-group row">
+              <label for="startingDate" class="col-4 col-form-label">A partir de</label>
+              <div class="col-8">
+                <select class="custom-select" [(ngModel)]="this.repeatScheme.startingYear"
+                  (change)="this.reschedule()">
+                  <option *ngFor="let year of years; let i = index" [value]="year">{{year}}</option>
+                </select>
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <label for="startingyearDate" class="col-4 col-form-label">A partir du</label>
+              <div class="col-8">
+                <input class="form-control" type="date" id="startingyearDate"
+                  [ngModel]="this.repeatScheme.startingYear | date: 'yyyy-MM-dd'" (ngModelChange)="this.repeatScheme.startingYear = this.setToDate($event); this.reschedule()"
+                  >
+              </div>
+            </div>
+          </div>
+
+          <div class="border-bottom px-4 py-4">
+
+            <div class="form-group row">
+              <label for="firstOccurence" class="col-4 col-form-label">Prochaine occurence</label>
+              <div class="col-8">
+                <!-- <input class="form-control" type="date" id="firstOccurence"
+                  [(ngModel)]="this.nextOccurrence" disabled> -->
+                <input class="form-control" type="text" id="firstOccurence" [(ngModel)]="this.nextOccurrence"
+                  disabled>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-bottom px-4 py-4">
+
+            <div class="col-12">
+              <textarea rows="1" class="form-control" class="form-control" 
+                type="text"
+                placeholder="Voulez-vous garder quelque chose en mémoire? Notez le ici."
+                [(ngModel)]="this.repeatScheme.description">
+              </textarea>
+            </div>
+
+          </div>
+
+          <div *ngIf="this.repeatScheme.progress === 100" class="border-bottom px-4 py-4 d-flex flex-row justify-content-around align-items-center">
+            <div>
+              <div class="row align-items-center">
+                <img class="w-3r mr-2" style="border-radius: 5px;"
+                  src="assets/images/blank-profile-picture.png" alt="">
+                <label *ngIf="this.approvedAppear === false; else approvedByName" style="color: red; font-weight: bold;"
+                  (click)="this.updateApprovedAppear()">Approuvé par...</label>
+                <ng-template #approvedByName>
+                  <div class="d-flex align-items-center">
+                    <ng2-completer inputClass="form-control my-auto" matchClass="font-weight-bold" autoMatch="true"
+                      [(ngModel)]="this.repeatScheme.ApprovedByName" [maxChars]="3" autofocus="true"
+                      (focusout)="this.updateApprovedAppear()" [datasource]="this.dataService"
+                      [minSearchLength]="0" (selected)="updateApprovedBy($event)">
+                    </ng2-completer>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div>
+              <div class="row align-items-center">
+                <img class="w-3r mr-2" style="border-radius: 5px;"
+                  src="assets/images/blank-profile-picture.png" alt="">
+                <label *ngIf="this.workedwith === false; else workedwithName" style="color: red; font-weight: bold;"
+                  (click)="this.updateWorkedwithAppear()">J'ai travaillé avec...</label>
+                <ng-template #workedwithName>
+                  <div class="d-flex align-items-center">
+                    <ng2-completer inputClass="form-control my-auto" matchClass="font-weight-bold" autoMatch="true"
+                      [(ngModel)]="this.repeatScheme.WorkedWithName" [maxChars]="3" autofocus="true"
+                      (focusout)="this.updateWorkedwithAppear()" [datasource]="this.dataService"
+                      [minSearchLength]="0" (selected)="updateWorkedWith($event)">
+                    </ng2-completer>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="this.resetScheme()">Close</button>
+        <button type="button" data-dismiss="modal" class="btn" [ngClass]="{
+            'btn-primary': this.type==='add',
+            'btn-warning': this.type==='update'
+        }"
+          [disabled]="this.repeatScheme.label.length < 5"
+          (click)="this.type==='add' ? this.saveTask(): this.updateTask()" style="color: white!important;" >{{ this.type==='add' ? 
+            'Enregistrer la tâche' : 
+            'Mettre à jour'}}</button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,76 @@
+
+
+    <!-- ### $App Screen Content ### -->
+    <main class='main-content bgc-grey-100' style="padding-top: 0!important;">
+      <div id='mainContent'>
+        <div class="row gap-20 masonry pos-r">
+         
+          <div class="masonry-item col-12">
+            <!-- #Site Visits ==================== -->
+            <div class="bd bgc-white">
+              <div class="peers fxw-nw@lg+ ai-s" style="height: 80vh !important;">
+                <div class="peer bdL p-20 w-100">
+                  <div class="card-hover-shadow-2x mb-3 card" style="height: 75vh !important;">
+                        <div class="card-header-tab card-header">
+                          <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                              class="fa fa-tasks"></i>&nbsp;Tâches programmées</div>
+                        </div>
+                        <div class="scroll-area-sm" style="height: 60vh !important;">
+                          <div style="position: static;" class="ps ps--active-y">
+                            <div class="ps-content">
+                              <ul class=" list-group list-group-flush">
+  
+                                <li class="list-group-item " *ngFor="let task of this.scheduledtasks; let i = index">
+                                  <div class="todo-indicator badge-danger" [ngClass]="{
+                                              'bg-warning': this.task.status === 'ongoing',
+                                              'bg-danger': this.task.status === 'undone',
+                                              'bg-success': this.task.status === 'done',
+                                              'bg-primary': this.task.status === 'suspended',
+                                              'bg-dark': this.task.status === 'cancelled'
+                                            }"></div>
+                                  <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                      <div class="widget-content-left mr-2">
+                                        <div class="custom-checkbox custom-control"> <input class="custom-control-input"
+                                            type="checkbox" [id]="'checkingbox' + i"><label
+                                            class="custom-control-label" [for]="'checkingbox' + i">&nbsp;</label>
+                                        </div>
+                                      </div>
+                                      <div class="widget-content-left">
+                                        <div class="widget-heading">
+                                          {{this.task.label}}
+                                          <div
+                                            class="badge badge-danger ml-2" [ngClass]="{
+                                              'bg-warning': this.task.status === 'ongoing',
+                                              'bg-danger': this.task.status === 'undone',
+                                              'bg-success': this.task.status === 'done',
+                                              'bg-primary': this.task.status === 'suspended',
+                                              'bg-dark': this.task.status === 'cancelled'
+                                            }">{{this.task.status}}</div>
+                                        </div>
+                                        <div class="widget-subheading"><i>Assigné par {{this.task.assignerName}}</i></div>
+                                      </div>
+                                      <div class="widget-content-right"> <button
+                                          class="border-0 btn-transition btn btn-outline-success"> <i
+                                            class="fa fa-check"></i></button> <button
+                                          class="border-0 btn-transition btn btn-outline-danger"> <i
+                                            class="fa fa-trash"></i> </button> </div>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-block text-right card-footer">
+                            <!-- <button class="mr-2 btn btn-link btn-sm">Cancel</button> -->
+                            <button class="btn btn-primary">Ajouter une tâche programmée</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+

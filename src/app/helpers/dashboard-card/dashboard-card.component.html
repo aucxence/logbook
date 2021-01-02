@@ -1,0 +1,59 @@
+<!-- <div (click) = "this.clicked()">
+  <div class="rounded shadow col m-4" style="height: 215px; width: 150px;">
+    <div class="d-flex flex-column justify-content-center align-items-center ">
+      <img [src]="image" class="card-img-top shadow rounded mt-3" style="height: 100px; width: 100px;">
+      <div class="p-3">
+        <div style="font-size: medium; font-weight: bold;">{{titre}}</div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="col-xs-12 col-sm-6 col-md-4 bg-info" (click) = "this.clicked()" style="flex: 1 1 auto;">
+  <div class="image-flip" >
+      <div class="mainflip flip-0">
+          <div class="frontside">
+              <div class="card">
+                  <div class="card-body text-center">
+                      <p><img class=" img-fluid" [src]="image" alt="card image"></p>
+                      <h4 class="card-title">{{titre}}</h4>
+                      <p class="card-text">This is basic card with image on top, title, description and button.</p>
+                      <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                  </div>
+              </div>
+          </div>
+          <div class="backside">
+              <div class="card">
+                  <div class="card-body text-center mt-4">
+                      <h4 class="card-title">Sunlimetech</h4>
+                      <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
+                      <ul class="list-inline">
+                          <li class="list-inline-item">
+                              <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                  <i class="fa fa-facebook"></i>
+                              </a>
+                          </li>
+                          <li class="list-inline-item">
+                              <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                  <i class="fa fa-twitter"></i>
+                              </a>
+                          </li>
+                          <li class="list-inline-item">
+                              <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                  <i class="fa fa-skype"></i>
+                              </a>
+                          </li>
+                          <li class="list-inline-item">
+                              <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                  <i class="fa fa-google"></i>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+

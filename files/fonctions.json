@@ -1,0 +1,62 @@
+[
+  {
+    "fonction": "itesse stagiaire",
+    "level": 0
+  },
+  {
+    "fonction": "itesse",
+    "level": 250
+  },
+  {
+    "fonction": "itesse principale",
+    "level": 500
+  },
+  {
+    "fonction": "itesse avec fonctions supplémentaires",
+    "level": 750
+  },
+  {
+    "fonction": "itesse à la Direction Générale",
+    "level": 1000
+  },
+  {
+    "fonction": "electronicien",
+    "level": 1000
+  },
+  {
+    "fonction": "electricien",
+    "level": 1000
+  },
+  {
+    "fonction": "controlleur stagiaire",
+    "level": 1250
+  },
+  {
+    "fonction": "controlleur",
+    "level": 1500
+  },
+  {
+    "fonction": "comptable stagiaire",
+    "level": 1750
+  },
+  {
+    "fonction": "comptable",
+    "level": 2000
+  },
+  {
+    "fonction": "chef itesse",
+    "level": 2250
+  },
+  {
+    "fonction": "assistante de direction",
+    "level": 2500
+  },
+  {
+    "fonction": "chef comptable",
+    "level": 2500
+  },
+  {
+    "fonction": "fonctions plus élevées",
+    "level": 5000
+  }
+]
